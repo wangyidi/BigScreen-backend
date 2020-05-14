@@ -1,4 +1,4 @@
-package com.weather.business.util;
+package com.bigScreen.business.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;

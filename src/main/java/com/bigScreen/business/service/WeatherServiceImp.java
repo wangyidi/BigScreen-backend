@@ -1,4 +1,4 @@
-package com.weather.business.service;
+package com.bigScreen.business.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.weather.business.entity.WeatherEntity;
-import com.weather.business.util.HttpClient;
-import com.weather.business.util.JSONUtil;
-import com.weather.business.util.Utility;
+import com.bigScreen.business.entity.WeatherEntity;
+import com.bigScreen.business.util.HttpClient;
+import com.bigScreen.business.util.JSONUtil;
+import com.bigScreen.business.util.Utility;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -28,7 +28,7 @@ public class WeatherServiceImp implements WeatherService{
 	@Value("${weather.api.url}")
 	private String URL;
 	
-	//record the weather detail
+	//record the bigScreen detail
 	// key city -> value JSON
 	public static Map<String, String>static_cityMap =new HashMap<String,String>();
 	
@@ -58,7 +58,7 @@ public class WeatherServiceImp implements WeatherService{
 			if(static_cityMap.get(cityName)!=null) {
 				weatherEntity = JSONUtil.JsonToObject(static_cityMap.get(cityName),WeatherEntity.class );
 			}else {
-				//get the first weather Entity  from API
+				//get the first bigScreen Entity  from API
 				String response = HttpClient.doGet(URL.replace("$city$", cityName));
 				
 				weatherEntity = analysisJson(response,cityName);

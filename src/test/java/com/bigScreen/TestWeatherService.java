@@ -1,4 +1,4 @@
-package com.weather;
+package com.bigScreen;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.weather.business.service.WeatherService;
+import com.bigScreen.business.service.WeatherService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

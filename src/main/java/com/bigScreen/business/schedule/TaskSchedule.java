@@ -1,4 +1,4 @@
-package com.weather.business.schedule;
+package com.bigScreen.business.schedule;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,11 +10,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.weather.business.entity.WeatherEntity;
-import com.weather.business.service.WeatherServiceImp;
-import com.weather.business.util.HttpClient;
-import com.weather.business.util.JSONUtil;
-import com.weather.business.util.Utility;
+import com.bigScreen.business.entity.WeatherEntity;
+import com.bigScreen.business.service.WeatherServiceImp;
+import com.bigScreen.business.util.HttpClient;
+import com.bigScreen.business.util.JSONUtil;
+import com.bigScreen.business.util.Utility;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;

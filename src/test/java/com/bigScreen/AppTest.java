@@ -1,4 +1,4 @@
-package com.weather;
+package com.bigScreen;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

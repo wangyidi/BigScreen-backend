@@ -1,4 +1,4 @@
-package com.weather.business.res;
+package com.bigScreen.business.res;
 
 
 import javax.servlet.http.HttpServletRequest;

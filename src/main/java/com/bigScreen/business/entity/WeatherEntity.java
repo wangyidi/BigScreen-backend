@@ -1,4 +1,4 @@
-package com.weather.business.entity;
+package com.bigScreen.business.entity;
 /**
  * WeatherEntity
  * @author YiDiWang
@@ -48,7 +48,7 @@ public class WeatherEntity {
 	}
 	@Override
 	public String toString() {
-		return "WeatherEntity [city=" + city + ", updated_time=" + updated_time + ", weather=" + weather
+		return "WeatherEntity [city=" + city + ", updated_time=" + updated_time + ", bigScreen=" + weather
 				+ ", temperature=" + temperature + ", wind=" + wind + "]";
 	}
 	

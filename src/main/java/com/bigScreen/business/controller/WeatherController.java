@@ -1,4 +1,4 @@
-package com.weather.business.controller;
+package com.bigScreen.business.controller;
 
 import java.util.Map;
 
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.weather.business.res.BaseResource;
-import com.weather.business.service.WeatherService;
+import com.bigScreen.business.res.BaseResource;
+import com.bigScreen.business.service.WeatherService;
 
 @Controller
 @RequestMapping(value="/")
@@ -26,7 +26,7 @@ public class WeatherController extends BaseResource{
 	@Autowired
 	private WeatherService weatherService;
 	/**
-	 * Get the fist weather Info return index.jsp 
+	 * Get the fist bigScreen Info return index.jsp
 	 * @return ModelAndView
 	 */
 	@RequestMapping(value="/weather",method=RequestMethod.GET)

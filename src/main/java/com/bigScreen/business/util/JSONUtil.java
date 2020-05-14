@@ -1,4 +1,4 @@
-package com.weather.business.util;
+package com.bigScreen.business.util;
 
 import java.util.HashMap;
 import java.util.Map;
