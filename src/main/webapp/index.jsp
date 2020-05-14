@@ -58,12 +58,12 @@ var path = '<%=path%>'
 
 $("#selector").change(function(){
 	
-	var url = path +'/weather/'+this.value;
+	var url = path +'/bigScreen/'+this.value;
 	$.post(url,{},function(result,status){
 		var json = eval('(' + result + ')');
 		
 		$("#update_time").html(json.updated_time);
-		$("#weather").html(json.weather);
+		$("#bigScreen").html(json.weather);
 		$("#temperature").html(json.temperature+' °C');
 		$("#wind").html(json.wind+' km/h');
 		$("#city").html(json.city);
