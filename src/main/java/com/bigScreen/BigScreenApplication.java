@@ -10,9 +10,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @EnableScheduling
 @SpringBootApplication
-public class WeatherApplication 
+public class BigScreenApplication 
 {
     public static void main( String[] args ) {
-    	SpringApplication.run(WeatherApplication.class);
+    	SpringApplication.run(BigScreenApplication.class);
     }
 }
