@@ -26,7 +26,7 @@ public class ClassEntity implements Serializable{
 	private String address;
 	
 	//满意度
-	private Double satisfication;
+	private Double satisfiction;
 
 	public String getClass_id() {
 		return class_id;
@@ -84,19 +84,19 @@ public class ClassEntity implements Serializable{
 		this.address = address;
 	}
 
-	public Double getSatisfication() {
-		return satisfication;
+	public Double getSatisfiction() {
+		return satisfiction;
 	}
 
-	public void setSatisfication(Double satisfication) {
-		this.satisfication = satisfication;
+	public void setSatisfication(Double satisfiction) {
+		this.satisfiction = satisfiction;
 	}
 
 	@Override
 	public String toString() {
 		return "ClassEntity [class_id=" + class_id + ", class_no=" + class_no + ", system=" + system
 				+ ", classification=" + classification + ", duration=" + duration + ", working_hours=" + working_hours
-				+ ", address=" + address + ", satisfication=" + satisfication + "]";
+				+ ", address=" + address + ", satisfiction=" + satisfiction + "]";
 	}
 
 	

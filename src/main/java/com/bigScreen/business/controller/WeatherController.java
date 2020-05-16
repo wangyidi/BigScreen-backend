@@ -1,5 +1,6 @@
 package com.bigScreen.business.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bigScreen.business.entity.ClassEntity;
 import com.bigScreen.business.res.BaseResource;
+import com.bigScreen.business.service.ClassService;
 import com.bigScreen.business.service.WeatherService;
 
 @Controller
@@ -25,6 +28,9 @@ public class WeatherController extends BaseResource{
 	
 	@Autowired
 	private WeatherService weatherService;
+	
+	@Autowired
+	private ClassService classService;
 	/**
 	 * Get the fist bigScreen Info return index.jsp
 	 * @return ModelAndView
@@ -38,6 +44,8 @@ public class WeatherController extends BaseResource{
 		mode.addObject("weatherList", weatherMap.get("cityList"));
 		mode.addObject("weatherEntity", weatherMap.get("weatherEntity"));
 		mode.setViewName("index");
+		List<ClassEntity>list = classService.getAllClassData();
+		System.out.println(list.toString());
 		return mode;
 	}
 	

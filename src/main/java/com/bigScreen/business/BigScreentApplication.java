@@ -1,5 +1,6 @@
 package com.bigScreen.business;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +11,7 @@ import org.springframework.web.filter.CorsFilter;
 
 @SpringBootApplication
 @EnableScheduling
+@MapperScan("com.bigScreen.business.dao")
 public class BigScreentApplication {
 	
 	public static void main(String[] args) {
