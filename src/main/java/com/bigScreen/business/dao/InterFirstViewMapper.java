@@ -22,6 +22,10 @@ public interface InterFirstViewMapper {
 
     List<String>getLastYearTrainNumber(@Param("yearList") List yearList);
 
+    List<String>getLastYearTrainCount(@Param("yearList") List yearList);
+
     List<String>getTrainingTimes(@Param("yearList") List yearList);
+
+    List<String>getTrainingDays(@Param("yearList") List yearList);
 
 }

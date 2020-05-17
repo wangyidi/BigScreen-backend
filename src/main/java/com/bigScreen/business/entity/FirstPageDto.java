@@ -27,7 +27,6 @@ public class FirstPageDto implements Serializable {
     private String lessonCount;
 //    场次
     private String classCount;
-
 //    月份
     private List<String> mounthList;
 //    参训人数
