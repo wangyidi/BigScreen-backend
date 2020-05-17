@@ -1,8 +1,10 @@
 package com.bigScreen.business.util;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class DateUtill {
 	
@@ -79,5 +81,13 @@ public class DateUtill {
 				return sdf.format(m);
 			}
 
+			public static List<String> getLastTweentyMonths(){
+				SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM");
+				Date now = new Date();
+				sdf.format(now);
+				String[] mounthList = getLast12Months(sdf.format(now));
+				List<String> result = Arrays.asList(mounthList);
+				return result;
+			}
 }
 
