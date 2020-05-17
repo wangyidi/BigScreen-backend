@@ -98,6 +98,7 @@ public class ThirdPageServiceImp implements ThirdPageService{
 		
 		List<ThirdModel> deptList= getDepGroupByMonth(startDate, endDate);
 		
+		map.put("yearList", DateUtill.getLast12Months(DateUtill.getCurrentYearAndMonth()));		
 		map.put("deptList", deptList);
 		map.put("SystemDataList", personSum);
 		
