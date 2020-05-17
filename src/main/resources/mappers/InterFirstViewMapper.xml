@@ -62,8 +62,35 @@
             ) as A
         </foreach>
     </select>
+    <select id="getLastYearTrainCount" resultType="java.lang.String" parameterType="java.util.List">
+        <foreach collection="yearList" separator="UNION ALL" item="item">
+        SELECT count(1) FROM (
+                SELECT train.EMP_NO
+                FROM
+                inter_training_view AS train,
+                inter_lesson_view AS lesson
+                WHERE train.CLASS_ID = lesson.CLASS_ID
+                AND DATE_FORMAT(lesson.END_DATE,'%Y-%m') = #{item}
+                ) as A
+        </foreach>
+    </select>
     <select id="getTrainingTimes" resultType="java.lang.String" parameterType="java.util.List">
-
+        SELECT COUNT(1)
+            FROM inter_class_view
+            WHERE DATE_FORMAT(END_DATE,'%Y-%m') IN
+            <foreach collection="yearList" open="(" close=")" separator="," item="item">
+                #{item}
+            </foreach>
+            GROUP BY DATE_FORMAT(END_DATE,'%Y-%m')
+    </select>
+    <select id="getTrainingDays" resultType="java.lang.String" parameterType="java.util.List">
+        SELECT sum(DURATION)
+        FROM inter_class_view
+        WHERE DATE_FORMAT(END_DATE,'%Y-%m') IN
+        <foreach collection="yearList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+        GROUP BY DATE_FORMAT(END_DATE,'%Y-%m')
     </select>
 
 

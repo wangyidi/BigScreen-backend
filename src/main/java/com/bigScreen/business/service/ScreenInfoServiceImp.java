@@ -47,8 +47,14 @@ public class ScreenInfoServiceImp implements ScreenInfoService {
         List<String> lastYearTrainNumber = interFirstViewMapper.getLastYearTrainNumber(yearList); // 参训人数
         firstPageDto.setLastYearTrainNumber(lastYearTrainNumber);
 
-        List<String> trainingTimes = interFirstViewMapper.getTrainingTimes(yearList);//场次
+        List<String> lastYearTrainCount = interFirstViewMapper.getLastYearTrainCount(yearList);//参训人次
+        firstPageDto.setLastYearTrainCount(lastYearTrainCount);
 
+        List<String> trainingTimes = interFirstViewMapper.getTrainingTimes(yearList);//场次
+        firstPageDto.setTrainingTimes(trainingTimes);
+
+        List<String> trainingDays = interFirstViewMapper.getTrainingDays(yearList);//培训天数
+        firstPageDto.setTrainingDays(trainingDays);
 
         String result =JSONUtil.ObjectToJson(firstPageDto);
         return result;
