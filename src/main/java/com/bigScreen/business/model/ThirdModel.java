@@ -1,6 +1,7 @@
 package com.bigScreen.business.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class ThirdModel implements Serializable{
 
@@ -16,7 +17,19 @@ public class ThirdModel implements Serializable{
 
 	private String date;
 
+	List<ThirdDeptModel>recordList;
 	
+	
+	
+	
+	public List<ThirdDeptModel> getRecordList() {
+		return recordList;
+	}
+
+	public void setRecordList(List<ThirdDeptModel> recordList) {
+		this.recordList = recordList;
+	}
+
 	public String getDate() {
 		return date;
 	}

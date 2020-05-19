@@ -20,6 +20,7 @@ import com.bigScreen.business.dao.ClassMapper;
 import com.bigScreen.business.dao.ThirdPageMapper;
 import com.bigScreen.business.entity.ClassEntity;
 import com.bigScreen.business.entity.WeatherEntity;
+import com.bigScreen.business.model.ThirdDeptModel;
 import com.bigScreen.business.model.ThirdModel;
 import com.bigScreen.business.util.DateUtill;
 import com.bigScreen.business.util.HttpClient;
@@ -68,10 +69,36 @@ public class ThirdPageServiceImp implements ThirdPageService{
 		Map<String, Object>map = new HashMap<>();
 		map.put("startDate", startDate);
 		map.put("endDate", endDate);
-
-		return thirdPageMapper.getDepGroupByMonth(map);
+		String[] yearList = DateUtill.getLast12Months(DateUtill.getCurrentYearAndMonth());
+		 
+		List<ThirdModel>List =thirdPageMapper.getDepGroupByMonth(map);
+		for (ThirdModel thirdModel : List) {
+			thirdModel.setRecordList(reBuild(thirdModel.getRecordList(),yearList));
+		}
+		return List;
 	}
 
+	
+	private List<ThirdDeptModel> reBuild(List<ThirdDeptModel> recordList,String[] yearList){		
+		List<ThirdDeptModel>newList = new ArrayList<>(12);
+		for (String date : yearList) {
+			ThirdDeptModel e = new ThirdDeptModel();
+			e.setDate(date);
+			e.setSumNum(0);
+			newList.add(e);
+		}
+		
+		for (ThirdDeptModel thirdDeptModel : recordList) {
+			for (ThirdDeptModel thirdDept : newList) {
+				if(thirdDeptModel.getDate().equals(thirdDept.getDate())){
+					thirdDept.setSumNum(thirdDeptModel.getSumNum());
+				}
+			}
+		}
+		
+		return newList;
+	}
+	
 	
 
 	@Override
@@ -83,14 +110,12 @@ public class ThirdPageServiceImp implements ThirdPageService{
 		List<ThirdModel>personSumBySystemAndDateList = getPersonSumBySystemAndDate(startDate, endDate);
 		List<ThirdModel>personSum = getSumBySystem();
 		
-		NumberFormat percent = NumberFormat.getPercentInstance();
-		percent.setMaximumFractionDigits(2);
+		
 		for (ThirdModel thirdSum : personSum) {
 			for (ThirdModel third : personSumBySystemAndDateList) {
 				if(thirdSum.getDepName().equals(third.getDepName())){
 					BigDecimal a = BigDecimal.valueOf(third.getSumNum()).divide(BigDecimal.valueOf(thirdSum.getSumNum()),2,RoundingMode.HALF_UP);
-					String value = percent.format(a.doubleValue());
-					thirdSum.setPersent(value);
+					thirdSum.setPersent(a.multiply(BigDecimal.valueOf(100)).toString());
 					break;
 				}
 			}

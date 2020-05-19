@@ -11,6 +11,15 @@
     </resultMap>
     
 	
+	<resultMap type="com.bigScreen.business.model.ThirdModel" id="DeptResultMap">
+        <result column="depName" property="depName" jdbcType="VARCHAR" />
+        <collection property="recordList" ofType="com.bigScreen.business.model.ThirdDeptModel"  javaType="java.util.ArrayList" >
+	        <result column="sumNum" property="sumNum" jdbcType="INTEGER" />
+	        <result column="date" property="date" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+	
+	
 
     <select id="getSumBySystem"  resultMap="BaseResultMap" >
          select count(1) as sumNum,DEpt1_name as depName,system from inter_employee_view as a where system is not null group by a.system,a.DEpt1_name;
@@ -37,8 +46,8 @@
     </select>
     
     
-    <select id="getDepGroupByMonth" resultMap="BaseResultMap" parameterType="java.util.HashMap">
-    	 select count(1) as sumNum ,t.DEPT1_ID as depName,DATE_FORMAT(c.END_DATE,"%Y-%m") as date 
+    <select id="getDepGroupByMonth" resultMap="DeptResultMap" parameterType="java.util.HashMap">
+    	 select t.DEPT1_ID as depName,count(1) as sumNum ,DATE_FORMAT(c.END_DATE,"%Y-%m") as date 
     	 	from 
 		inter_training_view t left join inter_class_view c on c.CLASS_ID = t.CLASS_ID 
 		<where>
