@@ -37,7 +37,7 @@ private static final Logger logger = Logger.getLogger(SecondPageController.class
 	public Object getSecondPageData(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		try {
 			logger.info("getSecondPageData ..start");
-			Object object =  null;
+			Object object =  secondPageService.getSecondPageData();
 			return object;
 		 } catch (Exception e) {
 	         logger.error("getThirdPageData exception:", e);

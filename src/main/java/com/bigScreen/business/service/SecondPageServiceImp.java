@@ -2,6 +2,7 @@ package com.bigScreen.business.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +33,57 @@ import net.sf.json.JSONObject;
 @Service
 public class SecondPageServiceImp implements SecondPageService{
 
-	private static final Logger logger = Logger.getLogger(SecondPageServiceImp.class); 
-	
-	
+	private static final Logger logger = Logger.getLogger(SecondPageServiceImp.class);
+
+	@Autowired
+	private ThirdPageMapper thirdPageMapper;
+
+	@Override
+	public Object getSecondPageData() {
+		Map<String,Object>map = new HashMap<>();
+		String companyCount = thirdPageMapper.getEmployeeCount();//公司总人数
+		map.put("companyCount",companyCount);
+		String trainCount = thirdPageMapper.getTrainingCount();// 参训人数
+		map.put("trainCount",trainCount);
+		String newJoinCount  = thirdPageMapper.getNewJoinCount();//新员工培训人数
+		map.put("newJoinCount",newJoinCount);
+
+		Map trainMap = new HashMap();
+		List<Map> trainList = thirdPageMapper.getAllTrain();
+		List<Map> employeeList = thirdPageMapper.getAllEmployee();
+		for (int i = 0; i < trainList.size(); i++) {
+			Map tmap = trainList.get(i);
+			if (tmap.get("sys") != null){
+				trainMap.put(tmap.get("sys"), tmap.get("count"));
+			}
+		}
+		List<String> sysList = new ArrayList();
+		List<String> proportionList = new ArrayList();
+		for (int i = 0; i < employeeList.size(); i++) {
+			Map emap = employeeList.get(i);
+			String xname = String.valueOf(emap.get("sys"));
+			Integer employeeC = Integer.valueOf(String.valueOf(emap.get("count")));
+			Integer trainC = Integer.valueOf(String.valueOf(trainMap.get(xname)));
+			sysList.add(xname);
+			proportionList.add(txfloat(trainC,employeeC));
+		}
+//		右一图
+		map.put("sysList",sysList);//x轴 体系
+		map.put("proportionList",proportionList);// Y轴 比例
+
+		return map;
+	}
+
+	/**
+	 * @param a 被除数
+	 * @param b 除数
+	 * @return 商
+	 */
+	public static String txfloat(int a,int b) {
+
+		DecimalFormat df=new DecimalFormat("0.00");//设置保留位数
+
+		return df.format((float)a/b);
+
+	}
 }
