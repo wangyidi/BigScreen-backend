@@ -6,8 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.bigScreen.business.entity.ClassEntity;
 import com.bigScreen.business.model.ThirdModel;
+import org.springframework.stereotype.Repository;
 
-@Mapper
+@Repository
 public interface ThirdPageMapper {
     
 	List<ThirdModel> getSumBySystem();
@@ -15,5 +16,14 @@ public interface ThirdPageMapper {
 	List<ThirdModel> getPersonSumBySystemAndDate(Map parameterMap);
 
 	List<ThirdModel> getDepGroupByMonth(Map parameterMap);
-	
+
+	String getEmployeeCount();
+
+	String getTrainingCount();
+
+	String getNewJoinCount();
+
+	List<Map> getAllTrain();
+
+	List<Map> getAllEmployee();
 }
