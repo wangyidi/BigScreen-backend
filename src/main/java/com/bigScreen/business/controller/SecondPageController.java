@@ -19,6 +19,7 @@ import com.bigScreen.business.entity.ClassEntity;
 import com.bigScreen.business.model.ThirdModel;
 import com.bigScreen.business.res.BaseResource;
 import com.bigScreen.business.service.ClassService;
+import com.bigScreen.business.service.SecondPageService;
 import com.bigScreen.business.service.ThirdPageService;
 import com.bigScreen.business.service.WeatherService;
 
@@ -26,17 +27,17 @@ import com.bigScreen.business.service.WeatherService;
 @RequestMapping(value="/")
 public class SecondPageController extends BaseResource{
 
-	private static final Logger logger = Logger.getLogger(SecondPageController.class);
+private static final Logger logger = Logger.getLogger(SecondPageController.class);
 	
 	@Autowired
-	private ThirdPageService thirdPageService;
+	private SecondPageService secondPageService;
 	
-	@RequestMapping(value="/getThirdPageData",method=RequestMethod.POST)
+	@RequestMapping(value="/getSecondPageData",method=RequestMethod.POST)
 	@ResponseBody
-	public Object getThirdPageData(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public Object getSecondPageData(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		try {
-			logger.info("getThirdPageData ..start");
-			Object object =  thirdPageService.getThirdPageData();
+			logger.info("getSecondPageData ..start");
+			Object object =  null;
 			return object;
 		 } catch (Exception e) {
 	         logger.error("getThirdPageData exception:", e);

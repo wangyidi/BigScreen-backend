@@ -27,23 +27,23 @@ import com.bigScreen.business.service.WeatherService;
 @RequestMapping(value="/")
 public class ThirdPageController extends BaseResource{
 
-	private static final Logger logger = Logger.getLogger(ThirdPageController.class);
+	
+private static final Logger logger = Logger.getLogger(ThirdPageController.class);
 	
 	@Autowired
-	private SecondPageService secondPageService;
+	private ThirdPageService thirdPageService;
 	
-	@RequestMapping(value="/getSecondPageData",method=RequestMethod.POST)
+	@RequestMapping(value="/getThirdPageData",method=RequestMethod.POST)
 	@ResponseBody
-	public Object getSecondPageData(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public Object getThirdPageData(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		try {
-			logger.info("getSecondPageData ..start");
-			Object object =  null;
+			logger.info("getThirdPageData ..start");
+			Object object =  thirdPageService.getThirdPageData();
 			return object;
 		 } catch (Exception e) {
 	         logger.error("getThirdPageData exception:", e);
 	         return message(500, e.getMessage(),"", request, response, e);
 	     }
 	}
-	
 	
 }
