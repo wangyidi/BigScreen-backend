@@ -26,4 +26,6 @@ public interface ThirdPageMapper {
 	List<Map> getAllTrain();
 
 	List<Map> getAllEmployee();
+
+	List<Map> getClassMap();
 }

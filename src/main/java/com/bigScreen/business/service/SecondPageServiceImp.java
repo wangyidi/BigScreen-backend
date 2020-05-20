@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.bigScreen.business.dao.InterFirstViewMapper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,6 +38,9 @@ public class SecondPageServiceImp implements SecondPageService{
 
 	@Autowired
 	private ThirdPageMapper thirdPageMapper;
+
+	@Autowired
+	private InterFirstViewMapper interFirstViewMapper;
 
 	@Override
 	public Object getSecondPageData() {
@@ -70,6 +74,22 @@ public class SecondPageServiceImp implements SecondPageService{
 //		右一图
 		map.put("sysList",sysList);//x轴 体系
 		map.put("proportionList",proportionList);// Y轴 比例
+
+//		右二图
+		List<String> yearList= DateUtill.getLastTweentyMonths();
+		map.put("yearList",yearList);// 年+月份
+
+
+		List<String> trainScale = new ArrayList<>();
+		List<String> lastYearTrainNumber = interFirstViewMapper.getLastYearTrainNumber(yearList); // 参训人数
+		for (String countNumber : lastYearTrainNumber) {
+			trainScale.add(txfloat(Integer.parseInt(countNumber),Integer.parseInt(companyCount)));
+		}
+		map.put("trainScale",trainScale); // 覆盖人次增长率
+
+
+		List<Map> classList = thirdPageMapper.getClassMap();
+		map.put("classList", classList);//课程
 
 		return map;
 	}

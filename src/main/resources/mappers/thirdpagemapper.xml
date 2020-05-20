@@ -105,4 +105,10 @@
 			WHERE SYSTEM is not null
 			GROUP BY SYSTEM
 	</select>
+
+	<select id="getClassMap" resultType="java.util.Map">
+        SELECT CLASSIFICATION, COUNT(CLASS_ID) AS COUNT FROM inter_class_view
+        WHERE CLASSIFICATION IS NOT NULL
+        GROUP BY CLASSIFICATION
+    </select>
 </mapper>
