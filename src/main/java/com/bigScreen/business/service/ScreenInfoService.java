@@ -1,7 +1,9 @@
 package com.bigScreen.business.service;
 
+import java.util.Map;
+
 public interface ScreenInfoService {
 
-    public Object getFirstPage() throws Exception;
+    public Map<String, Object> getFirstPage() throws Exception;
 
 }

@@ -42,7 +42,7 @@ public class TaskSchedule {
 		logger.info("start task ...");
 		DataCache.daliyDataMap.put("thirdPageData", thirdPageService.getThirdPageData());
 		DataCache.daliyDataMap.put("secondPageData", secondPageService.getSecondPageData());
-//		DataCache.daliyDataMap.put("firstPageData", screenInfoService.getFirstPage());
+		DataCache.daliyDataMap.put("firstPageData", screenInfoService.getFirstPage());
 
 
 		logger.info(DataCache.daliyDataMap);

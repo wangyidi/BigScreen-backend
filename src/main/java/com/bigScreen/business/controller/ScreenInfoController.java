@@ -1,5 +1,6 @@
 package com.bigScreen.business.controller;
 
+import com.bigScreen.business.cache.DataCache;
 import com.bigScreen.business.res.BaseResource;
 import com.bigScreen.business.service.ScreenInfoService;
 import com.bigScreen.business.service.WeatherService;
@@ -33,7 +34,15 @@ public class ScreenInfoController extends BaseResource {
 
         try {
             logger.info("ScreenInfoController ..start");
-            Object object = screenInfoService.getFirstPage();
+            Object object = new Object();
+            if(DataCache.daliyDataMap.get("firstPageData")!=null){
+                logger.info(" firstPageData from cache");
+                object = DataCache.daliyDataMap.get("firstPageData");
+            }else {
+                logger.info("firstPageData from MySQl");
+                object =  screenInfoService.getFirstPage();
+            }
+//            Object object = screenInfoService.getFirstPage();
             return object;
         } catch (Exception e) {
             logger.error("getWeatherListByCityName exception:", e);

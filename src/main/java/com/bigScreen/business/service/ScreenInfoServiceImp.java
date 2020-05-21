@@ -21,7 +21,7 @@ public class ScreenInfoServiceImp implements ScreenInfoService {
     private InterFirstViewMapper interFirstViewMapper;
 
     @Override
-    public Object  getFirstPage() {
+    public Map<String, Object>  getFirstPage() {
 
         Map<String,Object> map = new HashMap<>();
 //        FirstPageDto firstPageDto = new FirstPageDto();
