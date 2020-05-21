@@ -33,8 +33,8 @@ public class ScreenInfoController extends BaseResource {
 
         try {
             logger.info("ScreenInfoController ..start");
-            String jsonObject = screenInfoService.getFirstPage();
-            return jsonObject;
+            Object object = screenInfoService.getFirstPage();
+            return object;
         } catch (Exception e) {
             logger.error("getWeatherListByCityName exception:", e);
             return message(500, e.getMessage(), "getFirstPage", request, response, e);
