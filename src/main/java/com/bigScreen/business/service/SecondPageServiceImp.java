@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.bigScreen.business.dao.InterFirstViewMapper;
+import com.bigScreen.business.dao.SecondPageMapper;
+import com.bigScreen.business.model.SecondModel;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,6 +43,9 @@ public class SecondPageServiceImp implements SecondPageService{
 
 	@Autowired
 	private InterFirstViewMapper interFirstViewMapper;
+
+	@Autowired
+	private SecondPageMapper secondPageMapper;
 
 	@Override
 	public Object getSecondPageData() {
@@ -90,6 +95,11 @@ public class SecondPageServiceImp implements SecondPageService{
 
 		List<Map> classList = thirdPageMapper.getClassMap();
 		map.put("classList", classList);//课程
+
+
+
+		List<SecondModel>countryList = secondPageMapper.getCountryList(); // 国外地图信息
+
 
 		return map;
 	}

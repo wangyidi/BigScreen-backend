@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bigScreen.business.dao.SecondPageMapper">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.bigScreen.business.entity.SEntity" id="BaseResultMap">
+        <result column="country" property="country" jdbcType="VARCHAR" />
+        <collection property="classNameList" ofType="string" javaType="list">
+            <result column="className" />
+        </collection>
+    </resultMap>
+
+
+
+    <select id="getCountryList"  resultMap="BaseResultMap">
+          SELECT
+            v.country AS country
+        FROM
+            inter_training_view AS t
+            INNER JOIN inter_class_view c ON t.CLASS_ID = c.CLASS_ID
+            INNER JOIN address_view v ON t.WORK_CITY = v.city
+        <where>
+            <![CDATA[   country IS NOT NULL and DATE_FORMAT(c.END_DATE,'%Y') = DATE_FORMAT(now(), '%Y') ]]>
+        </where>
+
+
+        GROUP BY
+            v.country
+    </select>
+
+
+
+</mapper>

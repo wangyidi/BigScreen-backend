@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bigScreen.business.dao.InterFirstViewMapper">
+
+    <select id="getTrainingCountNow" resultType="java.lang.String">
+        SELECT COUNT(train.CLASS_ID)
+        FROM
+        inter_training_view AS train,
+        inter_lesson_view AS lesson
+        WHERE
+        train.CLASS_ID = lesson.CLASS_ID
+        AND YEAR(lesson.END_DATE) = YEAR(NOW())
+    </select>
+
+    <select id="getTrainingSatisficition" resultType="java.lang.String">
+        SELECT AVG(SATISFICTION)
+        FROM inter_class_view
+        WHERE
+        YEAR(END_DATE) = YEAR(NOW())
+        AND SATISFICTION IS NOT NULL
+    </select>
+    <select id="getWorkingHours" resultType="java.lang.String">
+        SELECT SUM(WORKING_HOURS)
+        FROM inter_class_view
+        WHERE
+        YEAR(END_DATE) = YEAR(NOW())
+    </select>
+    <select id="getPeopleCount" resultType="java.lang.String">
+        SELECT  count(1) FROM (
+            SELECT train.EMP_NO
+            FROM inter_training_view AS train,
+            inter_lesson_view AS lesson
+            WHERE
+            YEAR(lesson.END_DATE)=YEAR(now())
+            AND train.CLASS_ID = lesson.CLASS_ID
+            GROUP BY train.EMP_NO ) a
+    </select>
+    <select id="getLessonCount" resultType="java.lang.String">
+        SELECT COUNT(1) FROM(
+            SELECT CHILD_LESSON
+            FROM inter_lesson_view
+            WHERE
+            YEAR(END_DATE) = YEAR(NOW())
+            AND CHILD_LESSON IS NOT NULL
+            GROUP BY CHILD_LESSON
+            ) a
+    </select>
+    <select id="getClassCount" resultType="java.lang.String">
+        SELECT COUNT(1) FROM inter_class_view WHERE YEAR(END_DATE) = YEAR(NOW())
+    </select>
+
+    <select id="getLastYearTrainNumber" resultType="java.lang.String" parameterType="java.util.List">
+        <foreach collection="yearList" separator="UNION ALL" item="item">
+            SELECT count(1) FROM (
+            SELECT train.EMP_NO
+            FROM
+            inter_training_view AS train,
+            inter_lesson_view AS lesson
+            WHERE train.CLASS_ID = lesson.CLASS_ID
+            AND DATE_FORMAT(lesson.END_DATE,'%Y-%m') = #{item}
+            GROUP BY train.EMP_NO
+            ) as A
+        </foreach>
+    </select>
+    <select id="getLastYearTrainCount" resultType="java.lang.String" parameterType="java.util.List">
+        <foreach collection="yearList" separator="UNION ALL" item="item">
+        SELECT count(1) FROM (
+                SELECT train.EMP_NO
+                FROM
+                inter_training_view AS train,
+                inter_lesson_view AS lesson
+                WHERE train.CLASS_ID = lesson.CLASS_ID
+                AND DATE_FORMAT(lesson.END_DATE,'%Y-%m') = #{item}
+                ) as A
+        </foreach>
+    </select>
+    <select id="getTrainingTimes" resultType="java.lang.String" parameterType="java.util.List">
+        SELECT COUNT(1)
+            FROM inter_class_view
+            WHERE DATE_FORMAT(END_DATE,'%Y-%m') IN
+            <foreach collection="yearList" open="(" close=")" separator="," item="item">
+                #{item}
+            </foreach>
+            GROUP BY DATE_FORMAT(END_DATE,'%Y-%m')
+    </select>
+    <select id="getTrainingDays" resultType="java.lang.String" parameterType="java.util.List">
+        SELECT sum(DURATION)
+        FROM inter_class_view
+        WHERE DATE_FORMAT(END_DATE,'%Y-%m') IN
+        <foreach collection="yearList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+        GROUP BY DATE_FORMAT(END_DATE,'%Y-%m')
+    </select>
+
+
+</mapper>

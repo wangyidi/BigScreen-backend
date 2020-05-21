@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bigScreen.business.dao.ClassMapper">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.bigScreen.business.entity.ClassEntity" id="ClassMap">
+        <id column="CLASS_ID" property="class_id" jdbcType="VARCHAR" />
+        <result column="CLASS_NO" property="class_no" jdbcType="VARCHAR" />
+        <result column="System" property="system" jdbcType="VARCHAR" />
+        <result column="CLASSIFICATION" property="classification" jdbcType="VARCHAR" />
+        <result column="DURATION" property="duration" jdbcType="VARCHAR" />
+        <result column="WORKING_HOURS" property="working_hours" jdbcType="DOUBLE" />
+        <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+	    <result column="SATISFICAION" property="satisfiction" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    
+
+    <select id="getAllClassData"  resultMap="ClassMap">
+        select *
+        from inter_class_view 
+    </select>
+    
+    
+
+</mapper>

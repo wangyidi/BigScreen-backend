@@ -4,15 +4,15 @@ import java.io.Serializable;
 
 public class EmployeeEntity implements Serializable{
 
-	
+
 	private static final long serialVersionUID = 3638895771532801520L;
 
 	private String employee_no;
-	
+
 	private String name;
-	
+
 	private String dept;
-	
+
 	private String system;
 
 	public String getEmployee_no() {
@@ -52,8 +52,8 @@ public class EmployeeEntity implements Serializable{
 		return "Employee [employee_no=" + employee_no + ", name=" + name + ", dept=" + dept + ", system="
 				+ system + "]";
 	}
-	
-	
-	
-	
+
+
+
+
 }

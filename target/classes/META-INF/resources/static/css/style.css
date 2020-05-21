@@ -1,0 +1,46 @@
+@charset "UTF-8";
+  .datalist {
+            border: 1px solid #0058a3; 
+            font-family: Arial;
+            border-collapse: collapse; 
+            background-color: #eaf5ff;
+            font-size: 14px;
+            table-layout: fixed;
+            word-wrap: break-word;
+            word-break: break-all;
+            width: 500px;
+        }
+ 
+        .datalist caption {
+            padding-bottom: 5px;
+            font: bold 1.4em;
+            text-align: left;
+        }
+ 
+        .datalist th {
+            border: 1px solid #0058a3; 
+            background-color: #4bacff; 
+            color: #FFFFFF;
+            font-weight: bold;
+            padding-top: 4px;
+            padding-bottom: 4px;
+            padding-left: 12px;
+            padding-right: 12px;
+            text-align: center;
+        }
+ 
+        .datalist td {
+            border: 1px solid #0058a3;
+            text-align: left;
+            padding-top: 4px;
+            padding-bottom: 4px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+ 
+        .datalist tr:nth-child(even) {background:#e1f2f9}
+        .datalist tr:nth-child(odd) {background: #cc9933}
+ 
+        .datalist tr.altrow {
+            background-color: #c4e4ff; 
+        }
