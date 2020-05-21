@@ -10,7 +10,7 @@ public class SecondModel implements Serializable {
 
     private String province;
 
-    private List<String> classNameList;
+    private List<ClassModel> classNameList;
 
 
     public String getCountry() {
@@ -29,11 +29,11 @@ public class SecondModel implements Serializable {
         this.province = province;
     }
 
-    public List<String> getClassNameList() {
+    public List<ClassModel> getClassNameList() {
         return classNameList;
     }
 
-    public void setClassNameList(List<String> classNameList) {
+    public void setClassNameList(List<ClassModel> classNameList) {
         this.classNameList = classNameList;
     }
 

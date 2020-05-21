@@ -96,10 +96,10 @@ public class SecondPageServiceImp implements SecondPageService{
 		List<Map> classList = thirdPageMapper.getClassMap();
 		map.put("classList", classList);//课程
 
-
-
 		List<SecondModel>countryList = secondPageMapper.getCountryList(); // 国外地图信息
-
+		map.put("countryList", countryList);
+		List<SecondModel>calssNameList = secondPageMapper.getClassNameByCity(); // 课程名称信息
+		map.put("calssNameList", calssNameList);
 
 		return map;
 	}

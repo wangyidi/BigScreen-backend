@@ -3,10 +3,12 @@
 <mapper namespace="com.bigScreen.business.dao.SecondPageMapper">
 
     <!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.bigScreen.business.entity.SEntity" id="BaseResultMap">
+    <resultMap type="com.bigScreen.business.model.SecondModel" id="BaseResultMap">
         <result column="country" property="country" jdbcType="VARCHAR" />
-        <collection property="classNameList" ofType="string" javaType="list">
-            <result column="className" />
+         <result column="province" property="province" jdbcType="VARCHAR" />
+        <collection property="classNameList" ofType="com.bigScreen.business.model.ClassModel"  javaType="java.util.ArrayList" >
+   	        <result column="className" property="className" jdbcType="VARCHAR" />
+            
         </collection>
     </resultMap>
 
@@ -28,6 +30,29 @@
             v.country
     </select>
 
+	<select id="getClassNameByCity" resultMap="BaseResultMap">
+SELECT
+	d.province ,
+	a.CLASS_NAME AS className
+FROM
+	address_view d
+JOIN(
+	SELECT
+		c.CLASS_NAME ,
+		t.DEPT2_ID
+	FROM
+		inter_training_view t ,
+		inter_class_view c
+        <where>
+		t.CLASS_ID = c.CLASS_ID
+	<![CDATA[ and DATE_FORMAT(c.END_DATE,'%Y') = DATE_FORMAT(now(), '%Y') ]]>
+	) a ON a.DEPT2_ID = d.city
+</where>
+GROUP BY
+	d.province ,
+	a.CLASS_NAME		
+	
+	</select>
 
 
 </mapper>

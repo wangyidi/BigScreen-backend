@@ -12,5 +12,5 @@ import com.bigScreen.business.model.ThirdModel;
 public interface SecondPageMapper {
 
     List<SecondModel> getCountryList();
-
+    List<SecondModel> getClassNameByCity();
 }

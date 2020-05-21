@@ -11,6 +11,15 @@
     </resultMap>
     
 	
+	<resultMap type="com.bigScreen.business.model.ThirdModel" id="DeptResultMap">
+        <result column="depName" property="depName" jdbcType="VARCHAR" />
+        <collection property="recordList" ofType="com.bigScreen.business.model.ThirdDeptModel"  javaType="java.util.ArrayList" >
+	        <result column="sumNum" property="sumNum" jdbcType="INTEGER" />
+	        <result column="date" property="date" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+	
+	
 
     <select id="getSumBySystem"  resultMap="BaseResultMap" >
          select count(1) as sumNum,DEpt1_name as depName,system from inter_employee_view as a where system is not null group by a.system,a.DEpt1_name;
@@ -37,8 +46,8 @@
     </select>
     
     
-    <select id="getDepGroupByMonth" resultMap="BaseResultMap" parameterType="java.util.HashMap">
-    	 select count(1) as sumNum ,t.DEPT1_ID as depName,DATE_FORMAT(c.END_DATE,"%Y-%m") as date 
+    <select id="getDepGroupByMonth" resultMap="DeptResultMap" parameterType="java.util.HashMap">
+    	 select t.DEPT1_ID as depName,count(1) as sumNum ,DATE_FORMAT(c.END_DATE,"%Y-%m") as date 
     	 	from 
 		inter_training_view t left join inter_class_view c on c.CLASS_ID = t.CLASS_ID 
 		<where>
@@ -54,5 +63,52 @@
 		GROUP BY t.DEPT1_ID, DATE_FORMAT(c.END_DATE,"%Y-%m") 
 		order by depName, date
     </select>
+    <select id="getEmployeeCount" resultType="java.lang.String">
+		SELECT COUNT(1) FROM inter_employee_view
+	</select>
+	<select id="getTrainingCount" resultType="java.lang.String">
+		SELECT COUNT(a.number) FROM (
+			SELECT COUNT(1) AS number
+			FROM
+			inter_training_view AS train,
+			inter_class_view AS class
+			WHERE class.CLASS_ID = train.CLASS_ID
+			AND DATE_FORMAT(class.END_DATE,'%Y') = DATE_FORMAT(NOW(),'%Y')
+			GROUP BY(train.EMP_NO)
+			) AS a
+	</select>
+	<select id="getNewJoinCount" resultType="java.lang.String">
+		SELECT count(1) from (
+			SELECT COUNT(1) FROM inter_training_view WHERE CLASS_ID IN (
+			SELECT CLASS_ID
+			FROM inter_class_view
+			WHERE
+			CLASS_NAME = '新员工入职培训'
+			AND System = '公司级'
+			AND DATE_FORMAT(END_DATE,'%Y') = DATE_FORMAT(NOW(),'%Y')
+			)
+			GROUP BY (EMP_NO)) AS a
+	</select>
+	<select id="getAllTrain" resultType="java.util.Map">
+		SELECT count(1) AS count, SYSTEM AS sys FROM (
+			SELECT train.EMP_NO,train.SYSTEM
+			FROM inter_training_view train,
+			inter_class_view class
+			WHERE train.SYSTEM IS NOT NULL
+			AND class.CLASS_ID = train.CLASS_ID
+			AND DATE_FORMAT(class.END_DATE,	'%Y') = DATE_FORMAT(now(),'%Y')
+			GROUP BY train.SYSTEM, train.EMP_NO
+			) AS a GROUP BY SYSTEM
+	</select>
+	<select id="getAllEmployee" resultType="java.util.Map">
+		SELECT SYSTEM AS sys, COUNT(1) as count FROM inter_employee_view
+			WHERE SYSTEM is not null
+			GROUP BY SYSTEM
+	</select>
 
+	<select id="getClassMap" resultType="java.util.Map">
+        SELECT CLASSIFICATION, COUNT(CLASS_ID) AS COUNT FROM inter_class_view
+        WHERE CLASSIFICATION IS NOT NULL
+        GROUP BY CLASSIFICATION
+    </select>
 </mapper>
