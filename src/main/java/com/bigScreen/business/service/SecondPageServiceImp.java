@@ -48,7 +48,7 @@ public class SecondPageServiceImp implements SecondPageService{
 	private SecondPageMapper secondPageMapper;
 
 	@Override
-	public Object getSecondPageData() {
+	public Map<String, Object> getSecondPageData() {
 		Map<String,Object>map = new HashMap<>();
 		String companyCount = thirdPageMapper.getEmployeeCount();//公司总人数
 		map.put("companyCount",companyCount);

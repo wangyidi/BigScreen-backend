@@ -10,7 +10,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.bigScreen.business.cache.DataCache;
 import com.bigScreen.business.entity.WeatherEntity;
+import com.bigScreen.business.service.ScreenInfoService;
+import com.bigScreen.business.service.SecondPageService;
+import com.bigScreen.business.service.ThirdPageService;
 import com.bigScreen.business.service.WeatherServiceImp;
 import com.bigScreen.business.util.HttpClient;
 import com.bigScreen.business.util.JSONUtil;
@@ -24,62 +28,27 @@ public class TaskSchedule {
 	
 	Logger logger = Logger.getLogger(TaskSchedule.class);
 	
-	@Value("${weather.api.url}")
-	private String URL;
-	
 	@Autowired
-	private WeatherServiceImp serviceImp;
+	private SecondPageService secondPageService;
+	@Autowired
+	private ScreenInfoService screenInfoService;
+	@Autowired
+	private ThirdPageService thirdPageService;
 
 	@SuppressWarnings("static-access")
-	@Scheduled(fixedDelay = 1000*60)
+	@Scheduled(fixedDelay = 1000*60*2)
 	public void work() throws Exception {
 		
 		logger.info("start task ...");
-		String weather = serviceImp.weatherToString;
-		
-		List<String> list=Arrays.stream(weather.split(",")).collect(Collectors.toList());
-		
-		for (String cityName : list) {
-			
-			String response = HttpClient.doGet(URL.replace("$city$", cityName));
-			WeatherEntity entity = analysisJson(response, cityName);
-			serviceImp.static_cityMap.put(cityName, JSONUtil.ObjectToJson(entity));
-		}
+		DataCache.daliyDataMap.put("thirdPageData", thirdPageService.getThirdPageData());
+		DataCache.daliyDataMap.put("secondPageData", secondPageService.getSecondPageData());
+//		DataCache.daliyDataMap.put("firstPageData", screenInfoService.getFirstPage());
 
-		logger.info("end task ...");
+
+		logger.info(DataCache.daliyDataMap);
 	}
 	
 	
-	
-	
-	private WeatherEntity analysisJson(String response,String cityName) throws Exception {
-		
-		WeatherEntity entity = new WeatherEntity();
-		
-		JSONObject jsonObject = JSONUtil.JsonToObject(response, JSONObject.class);
-		JSONObject result =  jsonObject.getJSONObject("result");
-		JSONArray HeWeather5 =  result.getJSONArray("HeWeather5");
-		JSONObject HeWeather5Data  = (JSONObject) HeWeather5.get(0);
-		
-		JSONObject basic = HeWeather5Data.getJSONObject("basic");
-		//get loc time
-		JSONObject update = basic.getJSONObject("update");
-		JSONArray daily_forecast = HeWeather5Data.getJSONArray("daily_forecast");
-		JSONObject daily_forecast_Object = (JSONObject) daily_forecast.get(0);
-		
-		JSONObject cond=  daily_forecast_Object.getJSONObject("cond");
-		JSONObject tmp =  daily_forecast_Object.getJSONObject("tmp");
-		JSONObject wind =  daily_forecast_Object.getJSONObject("wind");
-		
-		entity.setWeather(cond.getString("txt_d"));
-		entity.setUpdated_time(Utility.dateToEnglishDate(update.getString("loc")));
-		entity.setTemperature(tmp.getString("max"));;
-		entity.setCity(cityName);
-		entity.setWind(wind.getString("spd"));
-		
-		return entity;
-		
-	}
 	
 	
 }

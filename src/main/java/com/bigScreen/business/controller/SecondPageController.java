@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bigScreen.business.cache.DataCache;
 import com.bigScreen.business.entity.ClassEntity;
 import com.bigScreen.business.model.ThirdModel;
 import com.bigScreen.business.res.BaseResource;
@@ -37,7 +38,14 @@ private static final Logger logger = Logger.getLogger(SecondPageController.class
 	public Object getSecondPageData(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		try {
 			logger.info("getSecondPageData ..start");
-			Object object =  secondPageService.getSecondPageData();
+			Object object = new Object();
+			if(DataCache.daliyDataMap.get("secondPageData")!=null){
+				logger.info(" secondPageData from cache");
+				object = DataCache.daliyDataMap.get("secondPageData");
+			}else {
+				logger.info("secondPageData from MySQl");
+				object =  secondPageService.getSecondPageData();
+			}
 			return object;
 		 } catch (Exception e) {
 	         logger.error("getThirdPageData exception:", e);

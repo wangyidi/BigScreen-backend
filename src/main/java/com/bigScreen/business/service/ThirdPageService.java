@@ -9,7 +9,7 @@ import com.bigScreen.business.model.ThirdModel;
 public interface ThirdPageService {
 	
 	
-	Object getThirdPageData();
+	Map<String,Object> getThirdPageData();
 
 	List<ThirdModel> getSumBySystem();
 	

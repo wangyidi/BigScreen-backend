@@ -103,7 +103,7 @@ public class ThirdPageServiceImp implements ThirdPageService{
 	
 
 	@Override
-	public Object getThirdPageData() {
+	public Map<String,Object> getThirdPageData() {
 		Map<String,Object>map = new HashMap<>();
 		String endDate = DateUtill.getCurrentYearAndMonth();
 		String startDate = DateUtill.getLast12MonthsByCurrentDate();
