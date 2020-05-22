@@ -97,6 +97,11 @@ public class SecondPageServiceImp implements SecondPageService{
 		map.put("classList", classList);//课程
 
 		List<SecondModel>countryList = secondPageMapper.getCountryList(); // 国外地图信息
+		if(!countryList.stream().filter(m->m.getCountry().equals("中国")).findAny().isPresent()){
+			SecondModel secondModel = new SecondModel();
+			secondModel.setCountry("中国");
+			countryList.add(secondModel);
+		}
 		map.put("countryList", countryList);
 		List<SecondModel>calssNameList = secondPageMapper.getClassNameByCity(); // 课程名称信息
 		map.put("calssNameList", calssNameList);
