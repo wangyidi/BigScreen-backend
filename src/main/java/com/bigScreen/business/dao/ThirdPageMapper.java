@@ -28,4 +28,9 @@ public interface ThirdPageMapper {
 	List<Map> getAllEmployee();
 
 	List<Map> getClassMap();
+	
+	List<ThirdModel> getPercentList(Map parameterMap);
+
+	List<ThirdModel> getPercentTimeList(Map parameterMap);
+
 }

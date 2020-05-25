@@ -102,7 +102,7 @@ public class SecondPageServiceImp implements SecondPageService{
 			secondModel.setCountry("中国");
 			countryList.add(secondModel);
 		}
-		map.put("countryList", countryList);
+		map.put("countryList", mapToJson(countryList));
 		List<SecondModel>calssNameList = secondPageMapper.getClassNameByCity(); // 课程名称信息
 		map.put("calssNameList", calssNameList);
 
@@ -120,5 +120,25 @@ public class SecondPageServiceImp implements SecondPageService{
 
 		return df.format((float)a/b);
 
+	}
+	
+private JSONObject mapToJson(List<SecondModel> countryList) {
+		
+		
+		JSONObject world_map_dict = new JSONObject();
+		JSONArray array =  new JSONArray();
+		
+		JSONObject fixvalue = new JSONObject();
+		fixvalue.put("attack_count","1");
+		
+		JSONObject ob = new JSONObject();
+		for (SecondModel secondModel : countryList) {
+			ob.put(secondModel.getCountry(), fixvalue);
+		}
+		world_map_dict.put("world_map_dict", ob);
+
+		
+		return world_map_dict;
+		
 	}
 }

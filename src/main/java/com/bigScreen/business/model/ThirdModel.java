@@ -19,9 +19,38 @@ public class ThirdModel implements Serializable{
 
 	List<ThirdDeptModel>recordList;
 	
+	private Integer personTime;
+	
+	private Integer number;
+
+	private Double percent;
+
 	
 	
-	
+	public Double getPercent() {
+		return percent;
+	}
+
+	public void setPercent(Double percent) {
+		this.percent = percent;
+	}
+
+	public Integer getPersonTime() {
+		return personTime;
+	}
+
+	public void setPersonTime(Integer personTime) {
+		this.personTime = personTime;
+	}
+
+	public Integer getNumber() {
+		return number;
+	}
+
+	public void setNumber(Integer number) {
+		this.number = number;
+	}
+
 	public List<ThirdDeptModel> getRecordList() {
 		return recordList;
 	}

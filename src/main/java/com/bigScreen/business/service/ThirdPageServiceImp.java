@@ -107,26 +107,30 @@ public class ThirdPageServiceImp implements ThirdPageService{
 		Map<String,Object>map = new HashMap<>();
 		String endDate = DateUtill.getCurrentYearAndMonth();
 		String startDate = DateUtill.getLast12MonthsByCurrentDate();
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
+		//参训人次
+		List<ThirdModel>participatingNumber = getPersonSumBySystemAndDate(startDate, endDate);
+		//参训人数
+		List<ThirdModel>participatingPersonTime = getSumBySystem();
 		
-		List<ThirdModel>personSumBySystemAndDateList = getPersonSumBySystemAndDate(startDate, endDate);
-		List<ThirdModel>personSum = getSumBySystem();
-		
-		
-		for (ThirdModel thirdSum : personSum) {
-			for (ThirdModel third : personSumBySystemAndDateList) {
-				if(thirdSum.getDepName().equals(third.getDepName())){
-					BigDecimal a = BigDecimal.valueOf(third.getSumNum()).divide(BigDecimal.valueOf(thirdSum.getSumNum()),2,RoundingMode.HALF_UP);
-					thirdSum.setPersent(a.multiply(BigDecimal.valueOf(100)).toString());
-					break;
-				}
-			}
-		}
+		//参训人数比率
+		List<ThirdModel>percentList = thirdPageMapper.getPercentList(map);
+		//参训人次比率
+		List<ThirdModel>percentTimeList = thirdPageMapper.getPercentTimeList(map);
+
+		map.put("percentList", percentList);
+		map.put("percentTimeList", percentTimeList);
+
 		
 		List<ThirdModel> deptList= getDepGroupByMonth(startDate, endDate);
 		map.put("yearList", DateUtill.getLast12Months(DateUtill.getCurrentYearAndMonth()));
 		map.put("deptList", deptList);
-		map.put("SystemDataList", personSum);
-		
+		//TODO delete
+		map.put("SystemDataList", participatingNumber);
+		map.put("participatingPersonTime", participatingPersonTime);
+		map.put("participatingNumber", participatingNumber);
+
 		return map;
 	}
 

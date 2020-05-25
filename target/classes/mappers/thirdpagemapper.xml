@@ -7,6 +7,9 @@
         <result column="depName" property="depName" jdbcType="VARCHAR" />
         <result column="system" property="system" jdbcType="VARCHAR" />
         <result column="date" property="date" jdbcType="VARCHAR" />
+        <result column="number" property="number" jdbcType="INTEGER" />
+        <result column="personTime" property="personTime" jdbcType="INTEGER" />
+        <result column="percent" property="percent" jdbcType="DOUBLE" />
         
     </resultMap>
     
@@ -21,14 +24,27 @@
 	
 	
 
-    <select id="getSumBySystem"  resultMap="BaseResultMap" >
-         select count(1) as sumNum,DEpt1_name as depName,system from inter_employee_view as a where system is not null group by a.system,a.DEpt1_name;
-
+    <select id="getSumBySystem"  resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+		select count(t.EMP_NO) number,t.DEPT1_ID as depName,t.SYSTEM as system 
+				from 
+			inter_training_view t 
+				left join inter_class_view c 
+				on c.CLASS_ID = t.CLASS_ID 
+			<where>
+					 t.system is not null
+				<if test="startDate!=null and startDate!=''">
+				    <![CDATA[   and DATE_FORMAT(c.END_DATE, '%Y-%m')>=  #{startDate}  ]]>
+				</if>
+				<if test="endDate!=null and endDate!=''">
+				    <![CDATA[  and DATE_FORMAT(c.END_DATE, '%Y-%m') <= #{endDate}   ]]>
+				</if>
+			</where>
+	 		 	GROUP BY t.system,t.DEPT1_ID
 
     </select>
     
     <select id="getPersonSumBySystemAndDate"  resultMap="BaseResultMap" parameterType="java.util.HashMap" >
-		select count(1) sumNum,t.DEPT1_ID as depName,t.SYSTEM as system 
+		select count(DISTINCT t.EMP_NO) personTime,t.DEPT1_ID as depName,t.SYSTEM as system 
 			from 
 		inter_training_view t 
 			left join inter_class_view c 
@@ -45,6 +61,51 @@
  		 	GROUP BY t.system,t.DEPT1_ID
     </select>
     
+    
+    <select id="getPercentList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+	    select (a.sumNum/b.sumNum)*100 as percent ,b.SYStem,b.depName 
+	    	from
+	    	 (SELECT count(DISTINCT t.EMP_NO) sumNum , t.DEPT1_ID AS depName ,t.SYSTEM AS system
+			FROM
+				inter_training_view t
+			LEFT JOIN inter_class_view c ON c.CLASS_ID = t.CLASS_ID
+			WHERE
+				t.system IS NOT NULL
+			<if test="startDate!=null and startDate!=''">
+			    <![CDATA[   and DATE_FORMAT(c.END_DATE, '%Y-%m')>=  #{startDate}  ]]>
+			</if>
+			<if test="endDate!=null and endDate!=''">
+			    <![CDATA[  and DATE_FORMAT(c.END_DATE, '%Y-%m') <= #{endDate}   ]]>
+			</if>
+			GROUP BY
+				t.system ,
+				t.DEPT1_ID) b,
+		(select count(NAME) sumNum,SYSTEM,DEPT1_NAME from inter_employee_view where SYSTEM is not null GROUP BY SYSTEM,DEPT1_NAME)a where a.DEPT1_name = b.depName
+    
+    </select>
+    
+     <select id="getPercentTimeList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    
+	    select (a.sumNum/b.sumNum)*100 as percent ,b.SYStem,b.depName 
+	    	from
+	    	 (SELECT count( t.EMP_NO) sumNum , t.DEPT1_ID AS depName ,t.SYSTEM AS system
+			FROM
+				inter_training_view t
+			LEFT JOIN inter_class_view c ON c.CLASS_ID = t.CLASS_ID
+			WHERE
+				t.system IS NOT NULL
+			<if test="startDate!=null and startDate!=''">
+			    <![CDATA[   and DATE_FORMAT(c.END_DATE, '%Y-%m')>=  #{startDate}  ]]>
+			</if>
+			<if test="endDate!=null and endDate!=''">
+			    <![CDATA[  and DATE_FORMAT(c.END_DATE, '%Y-%m') <= #{endDate}   ]]>
+			</if>
+			GROUP BY
+				t.system ,
+				t.DEPT1_ID) b,
+		(select count(NAME) sumNum,SYSTEM,DEPT1_NAME from inter_employee_view where SYSTEM is not null GROUP BY SYSTEM,DEPT1_NAME)a where a.DEPT1_name = b.depName
+    
+    </select>
     
     <select id="getDepGroupByMonth" resultMap="DeptResultMap" parameterType="java.util.HashMap">
     	 select t.DEPT1_ID as depName,count(1) as sumNum ,DATE_FORMAT(c.END_DATE,"%Y-%m") as date 
