@@ -66,19 +66,21 @@ public class SecondPageServiceImp implements SecondPageService{
 				trainMap.put(tmap.get("sys"), tmap.get("count"));
 			}
 		}
-		List<String> sysList = new ArrayList();
-		List<String> proportionList = new ArrayList();
+
+		List<Map<String,String>> sysList = new ArrayList();
 		for (int i = 0; i < employeeList.size(); i++) {
 			Map emap = employeeList.get(i);
 			String xname = String.valueOf(emap.get("sys"));
 			Integer employeeC = Integer.valueOf(String.valueOf(emap.get("count")));
 			Integer trainC = Integer.valueOf(String.valueOf(trainMap.get(xname)));
-			sysList.add(xname);
-			proportionList.add(txfloat(trainC,employeeC));
+			Map<String,String> tmp = new HashMap<>();
+			tmp.put("sys", xname);//体系名称
+			tmp.put("employee",employeeC+"");//所有人数
+			tmp.put("train",trainC +"");//参训人数
+			sysList.add(tmp);
 		}
 //		右一图
-		map.put("sysList",sysList);//x轴 体系
-		map.put("proportionList",proportionList);// Y轴 比例
+		map.put("sysList",sysList);
 
 //		右二图
 		List<String> yearList= DateUtill.getLastTweentyMonths();
