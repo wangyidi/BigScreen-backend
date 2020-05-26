@@ -92,8 +92,15 @@ public class SecondPageServiceImp implements SecondPageService{
 		for (String countNumber : lastYearTrainNumber) {
 			trainScale.add(txfloat(Integer.parseInt(countNumber),Integer.parseInt(companyCount)));
 		}
-		map.put("trainScale",trainScale); // 覆盖人次增长率
+		map.put("trainScale",trainScale); // 参训人数增长率
 
+
+		List<String> trainCountScale = new ArrayList<>();
+		List<String> lastYearTrainCount = interFirstViewMapper.getLastYearTrainCount(yearList);// 参训人次
+		for (String train : lastYearTrainCount) {
+			trainCountScale.add(txfloat(Integer.parseInt(train),Integer.parseInt(companyCount)));
+		}
+		map.put("trainCountScale",trainCountScale);// 参训人次 增长率
 
 		List<Map> classList = thirdPageMapper.getClassMap();
 		map.put("classList", classList);//课程
