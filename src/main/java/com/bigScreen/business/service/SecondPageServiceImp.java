@@ -75,8 +75,9 @@ public class SecondPageServiceImp implements SecondPageService{
 			Integer trainC = Integer.valueOf(String.valueOf(trainMap.get(xname)));
 			Map<String,String> tmp = new HashMap<>();
 			tmp.put("sys", xname);//体系名称
-			tmp.put("employee",employeeC+"");//所有人数
-			tmp.put("train",trainC +"");//参训人数
+//			tmp.put("employee",employeeC+"");//所有人数
+//			tmp.put("train",trainC +"");//参训人数
+			tmp.put("scale",txfloat(trainC,employeeC));
 			sysList.add(tmp);
 		}
 //		右一图
@@ -111,7 +112,7 @@ public class SecondPageServiceImp implements SecondPageService{
 			secondModel.setCountry("中国");
 			countryList.add(secondModel);
 		}
-		map.put("countryList", mapToJson(countryList));
+		map.put("countryList", mapToJson(countryList)); 
 		List<SecondModel>calssNameList = secondPageMapper.getClassNameByCity(); // 课程名称信息
 		map.put("calssNameList", calssNameList);
 
