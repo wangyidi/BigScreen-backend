@@ -27,7 +27,7 @@
     <select id="getSumBySystem"  resultMap="BaseResultMap" parameterType="java.util.HashMap" >
 		select count(t.EMP_NO) number,t.DEPT1_ID as depName,t.SYSTEM as system 
 				from 
-			inter_training_view t 
+			inter_training_view_new t
 				left join inter_class_view c 
 				on c.CLASS_ID = t.CLASS_ID 
 			<where>
@@ -46,7 +46,7 @@
     <select id="getPersonSumBySystemAndDate"  resultMap="BaseResultMap" parameterType="java.util.HashMap" >
 		select count(DISTINCT t.EMP_NO) personTime,t.DEPT1_ID as depName,t.SYSTEM as system 
 			from 
-		inter_training_view t 
+		inter_training_view_new t
 			left join inter_class_view c 
 			on c.CLASS_ID = t.CLASS_ID 
 		<where>
@@ -67,7 +67,7 @@
 	    	from
 	    	 (SELECT count(DISTINCT t.EMP_NO) sumNum , t.DEPT1_ID AS depName ,t.SYSTEM AS system
 			FROM
-				inter_training_view t
+				inter_training_view_new t
 			LEFT JOIN inter_class_view c ON c.CLASS_ID = t.CLASS_ID
 			WHERE
 				t.system IS NOT NULL
@@ -80,7 +80,7 @@
 			GROUP BY
 				t.system ,
 				t.DEPT1_ID) b,
-		(select count(NAME) sumNum,SYSTEM,DEPT1_NAME from inter_employee_view where SYSTEM is not null GROUP BY SYSTEM,DEPT1_NAME)a where a.DEPT1_name = b.depName
+		(select count(NAME) sumNum,SYSTEM,DEPT1_NAME from inter_employee_view_new where SYSTEM is not null GROUP BY SYSTEM,DEPT1_NAME)a where a.DEPT1_name = b.depName
     
     </select>
     
@@ -90,7 +90,7 @@
 	    	from
 	    	 (SELECT count( t.EMP_NO) sumNum , t.DEPT1_ID AS depName ,t.SYSTEM AS system
 			FROM
-				inter_training_view t
+				inter_training_view_new t
 			LEFT JOIN inter_class_view c ON c.CLASS_ID = t.CLASS_ID
 			WHERE
 				t.system IS NOT NULL
@@ -103,14 +103,14 @@
 			GROUP BY
 				t.system ,
 				t.DEPT1_ID) b,
-		(select count(NAME) sumNum,SYSTEM,DEPT1_NAME from inter_employee_view where SYSTEM is not null GROUP BY SYSTEM,DEPT1_NAME)a where a.DEPT1_name = b.depName
+		(select count(NAME) sumNum,SYSTEM,DEPT1_NAME from inter_employee_view_new where SYSTEM is not null GROUP BY SYSTEM,DEPT1_NAME)a where a.DEPT1_name = b.depName
     
     </select>
     
     <select id="getDepGroupByMonth" resultMap="DeptResultMap" parameterType="java.util.HashMap">
     	 select t.DEPT1_ID as depName,count(1) as sumNum ,DATE_FORMAT(c.END_DATE,"%Y-%m") as date 
     	 	from 
-		inter_training_view t left join inter_class_view c on c.CLASS_ID = t.CLASS_ID 
+		inter_training_view_new t left join inter_class_view c on c.CLASS_ID = t.CLASS_ID
 		<where>
 			t.SYSTEM is not null and c.System is not null 
 			<if test="startDate!=null and startDate!=''">
