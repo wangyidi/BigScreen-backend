@@ -58,10 +58,11 @@ public class SecondPageServiceImp implements SecondPageService{
 			Integer employeeC = Integer.valueOf(String.valueOf(emap.get("count")));
 			Integer trainC = Integer.valueOf(String.valueOf(trainMap.get(xname)));
 			Map<String,String> tmp = new HashMap<>();
-			tmp.put("sys", xname);//体系名称
+//			tmp.put("sys", xname);//体系名称
 //			tmp.put("employee",employeeC+"");//所有人数
 //			tmp.put("train",trainC +"");//参训人数
-			tmp.put("scale",txfloat(trainC,employeeC));
+//			tmp.put("scale",txfloat(trainC,employeeC));
+			tmp.put(xname,txfloat(trainC,employeeC));
 			sysList.add(tmp);
 		}
 //		右一图
