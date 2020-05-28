@@ -62,7 +62,7 @@ public class SecondPageServiceImp implements SecondPageService{
 //			tmp.put("employee",employeeC+"");//所有人数
 //			tmp.put("train",trainC +"");//参训人数
 			tmp.put("value",txfloat(trainC,employeeC));
-			tmp.put(xname,txfloat(trainC,employeeC));
+//			tmp.put(xname,txfloat(trainC,employeeC));
 			sysList.add(tmp);
 		}
 //		右一图
