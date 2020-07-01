@@ -59,7 +59,7 @@ public class SecondPageServiceImp implements SecondPageService{
 			Integer trainC = Integer.valueOf(String.valueOf(trainMap.get(xname)));
 			Map<String,String> tmp = new HashMap<>();
 			tmp.put("name", xname);//体系名称
-			tmp.put("value",txfloat(trainC,employeeC));
+			tmp.put("value",Double.parseDouble(txfloat(trainC,employeeC)) * 100 + "");
 			sysList.add(tmp);
 		}
 
