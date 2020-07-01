@@ -144,8 +144,9 @@
 			SELECT CLASS_ID
 			FROM inter_class_view
 			WHERE
-			CLASS_NAME = '新员工入职培训'
+			CLASS_NAME  like '%新员工入职培训%'
 			AND System = '公司级'
+			AND CLASSIFICATION = '新员工'
 			AND DATE_FORMAT(END_DATE,'%Y') = DATE_FORMAT(NOW(),'%Y')
 			)
 			GROUP BY (EMP_NO)) AS a
@@ -170,6 +171,7 @@
 	<select id="getClassMap" resultType="java.util.Map">
         SELECT CLASSIFICATION, COUNT(CLASS_ID) AS COUNT FROM inter_class_view
         WHERE CLASSIFICATION IS NOT NULL
+				AND DATE_FORMAT(END_DATE,	'%Y') = DATE_FORMAT(now(),'%Y')
         GROUP BY CLASSIFICATION
     </select>
 </mapper>

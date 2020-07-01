@@ -29,7 +29,7 @@ public class ScreenInfoServiceImp implements ScreenInfoService {
 
         String trainCount = interFirstViewMapper.getTrainingCountNow();
 //        firstPageDto.setTrainingCountNow(trainCount);
-        map.put("trainingCountNow",trainCount);// 实时参训人数
+        map.put("trainingCountNow",trainCount);// 实时参训人次
 
 //        firstPageDto.setSatisficition();//满意度
         map.put("satisficition",interFirstViewMapper.getTrainingSatisficition());//满意度

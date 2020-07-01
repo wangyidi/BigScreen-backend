@@ -36,8 +36,8 @@ public class SecondPageServiceImp implements SecondPageService{
 		Map<String,Object>map = new HashMap<>();
 		String companyCount = thirdPageMapper.getEmployeeCount();//公司总人数
 		map.put("companyCount",companyCount);
-		String trainCount = thirdPageMapper.getTrainingCount();// 参训人数
-		map.put("trainCount",trainCount);
+		String trainCount = thirdPageMapper.getTrainingCount();// 参训人数覆盖率
+		map.put("trainCount",Double.parseDouble(txfloat(Integer.parseInt(trainCount), Integer.parseInt(companyCount))) *100);
 		String newJoinCount  = thirdPageMapper.getNewJoinCount();//新员工培训人数
 		map.put("newJoinCount",newJoinCount);
 
@@ -59,12 +59,11 @@ public class SecondPageServiceImp implements SecondPageService{
 			Integer trainC = Integer.valueOf(String.valueOf(trainMap.get(xname)));
 			Map<String,String> tmp = new HashMap<>();
 			tmp.put("name", xname);//体系名称
-//			tmp.put("employee",employeeC+"");//所有人数
-//			tmp.put("train",trainC +"");//参训人数
 			tmp.put("value",txfloat(trainC,employeeC));
-//			tmp.put(xname,txfloat(trainC,employeeC));
 			sysList.add(tmp);
 		}
+
+
 //		右一图
 		map.put("sysList",sysList);
 

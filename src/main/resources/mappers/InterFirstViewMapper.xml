@@ -3,13 +3,12 @@
 <mapper namespace="com.bigScreen.business.dao.InterFirstViewMapper">
 
     <select id="getTrainingCountNow" resultType="java.lang.String">
-        SELECT COUNT(train.CLASS_ID)
+        SELECT COUNT(1) AS number
         FROM
         inter_training_view AS train,
-        inter_lesson_view AS lesson
-        WHERE
-        train.CLASS_ID = lesson.CLASS_ID
-        AND YEAR(lesson.END_DATE) = YEAR(NOW())
+        inter_class_view AS class
+        WHERE class.CLASS_ID = train.CLASS_ID
+        AND DATE_FORMAT(class.END_DATE,'%Y') = DATE_FORMAT(NOW(),'%Y')
     </select>
 
     <select id="getTrainingSatisficition" resultType="java.lang.String">
