@@ -9,7 +9,7 @@
         <result column="date" property="date" jdbcType="VARCHAR" />
         <result column="number" property="number" jdbcType="INTEGER" />
         <result column="personTime" property="personTime" jdbcType="INTEGER" />
-        <result column="percent" property="percent" jdbcType="DOUBLE" />
+        <result column="percent" property="percent" jdbcType="INTEGER" />
         
     </resultMap>
     
@@ -63,7 +63,7 @@
     
     
     <select id="getPercentList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
-	    select (a.sumNum/b.sumNum)*100 as percent ,b.SYStem,b.depName 
+	    select CEILING((a.sumNum/b.sumNum)*100) as percent ,b.SYStem,b.depName
 	    	from
 	    	 (SELECT count(DISTINCT t.EMP_NO) sumNum , t.DEPT1_ID AS depName ,t.SYSTEM AS system
 			FROM
@@ -86,7 +86,7 @@
     
      <select id="getPercentTimeList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
     
-	    select (a.sumNum/b.sumNum)*100 as percent ,b.SYStem,b.depName 
+	    select CEILING((a.sumNum/b.sumNum)*100) as percent ,b.SYStem,b.depName
 	    	from
 	    	 (SELECT count( t.EMP_NO) sumNum , t.DEPT1_ID AS depName ,t.SYSTEM AS system
 			FROM
