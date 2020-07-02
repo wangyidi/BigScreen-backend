@@ -75,17 +75,19 @@ public class SecondPageServiceImp implements SecondPageService{
 		List<String> trainScale = new ArrayList<>();
 		List<String> lastYearTrainNumber = interFirstViewMapper.getLastYearTrainNumber(yearList); // 参训人数
 		for (String countNumber : lastYearTrainNumber) {
-			trainScale.add(txfloat(Integer.parseInt(countNumber),Integer.parseInt(companyCount)));
+			trainScale.add(String.format("%.2f", (Double.parseDouble(txfloat(Integer.parseInt(countNumber),Integer.parseInt(companyCount))) * 100)));
 		}
-		map.put("trainScale",trainScale); // 参训人数增长率
+//		map.put("trainScale",trainScale); // 参训人数增长率
+		map.put("trainCountScale",trainScale); // 参训人次 增长率
 
 
 		List<String> trainCountScale = new ArrayList<>();
 		List<String> lastYearTrainCount = interFirstViewMapper.getLastYearTrainCount(yearList);// 参训人次
 		for (String train : lastYearTrainCount) {
-			trainCountScale.add(txfloat(Integer.parseInt(train),Integer.parseInt(companyCount)));
+			trainCountScale.add(String.format("%.2f", (Double.parseDouble(txfloat(Integer.parseInt(train),Integer.parseInt(companyCount))) *100)));
 		}
-		map.put("trainCountScale",trainCountScale);// 参训人次 增长率
+//		map.put("trainCountScale",trainCountScale);// 参训人次 增长率
+		map.put("trainScale",trainCountScale);// 参训人数增长率
 
 		List<Map> classList = thirdPageMapper.getClassMap();
 		map.put("classList", classList);//课程
