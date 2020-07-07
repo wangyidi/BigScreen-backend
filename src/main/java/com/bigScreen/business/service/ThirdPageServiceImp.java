@@ -48,8 +48,11 @@ public class ThirdPageServiceImp implements ThirdPageService{
 	/**
 	 * 获取系统级别参训人数 
 	 */
-	public List<ThirdModel> getSumBySystem(){
-		return thirdPageMapper.getSumBySystem();
+	public List<ThirdModel> getSumBySystem(String startDate,String endDate){
+		Map<String, Object>map = new HashMap<>();
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
+		return thirdPageMapper.getSumBySystem(map);
 	}
 	
 	/**
@@ -64,7 +67,7 @@ public class ThirdPageServiceImp implements ThirdPageService{
 	}
 	
 	/**
-	 * 获取12个月内所有部门的参训人次
+	 * 获取12个月内所有部门的参训人次 右2
 	 */
 	public List<ThirdModel> getDepGroupByMonth(String startDate,String endDate){
 		Map<String, Object>map = new HashMap<>();
@@ -109,25 +112,31 @@ public class ThirdPageServiceImp implements ThirdPageService{
 		String startDate = DateUtill.getLast12MonthsByCurrentDate();
 		map.put("startDate", startDate);
 		map.put("endDate", endDate);
-		//参训人次
-		List<ThirdModel>participatingNumber = getPersonSumBySystemAndDate(startDate, endDate);
-		//参训人数
-		List<ThirdModel>participatingPersonTime = getSumBySystem();
+
+		Map<String,Object>currentYearMap = new HashMap<>();
+		String endCurrentYearDate = DateUtill.getCurrentYearAndMonth();
+		String startCurrentYearDate = DateUtill.getCurrentYearFirstMonth();
+		currentYearMap.put("startDate", startCurrentYearDate);
+		currentYearMap.put("endDate", endCurrentYearDate);
+
+		//参训人次 左 4
+		List<ThirdModel>participatingNumber = getPersonSumBySystemAndDate(startCurrentYearDate, endCurrentYearDate);
+		//参训人数 左 4
+		List<ThirdModel>participatingPersonTime = getSumBySystem(startCurrentYearDate, endCurrentYearDate);
 		
-		//参训人数比率
-		List<ThirdModel>percentList = thirdPageMapper.getPercentList(map);
-		//参训人次比率
-		List<ThirdModel>percentTimeList = thirdPageMapper.getPercentTimeList(map);
+		//参训人数比率 左 4
+		List<ThirdModel>percentList = thirdPageMapper.getPercentList(currentYearMap);
+		//参训人次比率 左 4
+		List<ThirdModel>percentTimeList = thirdPageMapper.getPercentTimeList(currentYearMap);
 
 		map.put("percentList", percentList);
 		map.put("percentTimeList", percentTimeList);
 
 		
-		List<ThirdModel> deptList= getDepGroupByMonth(startDate, endDate);
+		List<ThirdModel> deptList= getDepGroupByMonth(startDate, endDate); // 获取12个月内所有部门的参训人次 右2
 		map.put("yearList", DateUtill.getLast12Months(DateUtill.getCurrentYearAndMonth()));
 		map.put("deptList", deptList);
-		//TODO delete
-		map.put("SystemDataList", participatingNumber);
+
 		map.put("participatingPersonTime", participatingPersonTime);
 		map.put("participatingNumber", participatingNumber);
 

@@ -23,15 +23,15 @@ public class ThirdModel implements Serializable{
 	
 	private Integer number;
 
-	private Double percent;
+	private Integer percent;
 
 	
 	
-	public Double getPercent() {
+	public Integer getPercent() {
 		return percent;
 	}
 
-	public void setPercent(Double percent) {
+	public void setPercent(Integer percent) {
 		this.percent = percent;
 	}
 

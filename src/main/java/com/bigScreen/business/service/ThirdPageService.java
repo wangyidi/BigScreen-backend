@@ -11,7 +11,7 @@ public interface ThirdPageService {
 	
 	Map<String,Object> getThirdPageData();
 
-	List<ThirdModel> getSumBySystem();
+	List<ThirdModel> getSumBySystem(String startDate,String endDate);
 	
 	List<ThirdModel> getPersonSumBySystemAndDate(String startDate,String endDate);
 

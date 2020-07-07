@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ThirdPageMapper {
     
-	List<ThirdModel> getSumBySystem();
+	List<ThirdModel> getSumBySystem(Map parameterMap);
 	
 	List<ThirdModel> getPersonSumBySystemAndDate(Map parameterMap);
 
