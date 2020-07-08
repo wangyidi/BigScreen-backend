@@ -139,6 +139,8 @@ public class ThirdPageServiceImp implements ThirdPageService{
 
 		map.put("participatingPersonTime", participatingPersonTime);
 		map.put("participatingNumber", participatingNumber);
+		//old
+		map.put("SystemDataList", participatingNumber);
 
 		return map;
 	}
@@ -165,7 +167,7 @@ public class ThirdPageServiceImp implements ThirdPageService{
 		
 		entity.setWeather(cond.getString("txt_d"));
 		entity.setUpdated_time(Utility.dateToEnglishDate(update.getString("loc")));
-		entity.setTemperature(tmp.getString("max"));;
+		entity.setTemperature(tmp.getString("max"));
 		entity.setCity(cityName);
 		
 		entity.setWind(wind.getString("spd"));
