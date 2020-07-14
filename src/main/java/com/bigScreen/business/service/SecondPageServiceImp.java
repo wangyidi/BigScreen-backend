@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,7 +60,8 @@ public class SecondPageServiceImp implements SecondPageService{
 			Integer trainC = Integer.valueOf(String.valueOf(trainMap.get(xname)));
 			Map<String,String> tmp = new HashMap<>();
 			tmp.put("name", xname);//体系名称
-			tmp.put("value",Double.parseDouble(txfloat(trainC,employeeC)) * 100 + "");
+			BigDecimal value = new BigDecimal(trainC).multiply(new BigDecimal(100)).divide(new BigDecimal(employeeC),2,BigDecimal.ROUND_HALF_UP);
+			tmp.put("value",value.toString());
 			sysList.add(tmp);
 		}
 
